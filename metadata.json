@@ -1,0 +1,6 @@
+{
+  "name": "RoomFinder",
+  "description": "Real-time location-based room rental social marketplace with interactive maps, messaging, bookings, and owner tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

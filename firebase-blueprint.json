@@ -1,0 +1,331 @@
+{
+  "entities": {
+    "UserAccount": {
+      "title": "UserAccount",
+      "description": "Private user account and PII profile stored at /users/{userId}.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID matching document ID." },
+        "fullName": { "type": "string", "description": "User full name." },
+        "username": { "type": "string", "description": "Unique handle." },
+        "email": { "type": "string", "description": "Private email address." },
+        "phone": { "type": "string", "description": "Private phone number." },
+        "bio": { "type": "string", "description": "Short user bio." },
+        "city": { "type": "string", "description": "User home city." },
+        "accountType": { "type": "string", "enum": ["SEEKER", "OWNER", "BOTH"] },
+        "photoData": { "type": "string", "description": "Compressed profile image data URI or HTTPS URL." },
+        "verified": { "type": "boolean", "description": "Verification status (server/admin controlled)." },
+        "showPhone": { "type": "boolean", "description": "Whether owner allows sharing phone on inquiries." },
+        "showEmail": { "type": "boolean", "description": "Whether owner allows sharing email on inquiries." },
+        "followersCount": { "type": "integer" },
+        "followingCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp." }
+      },
+      "required": ["userId", "fullName", "username", "accountType", "createdAt", "updatedAt"]
+    },
+    "PublicProfile": {
+      "title": "PublicProfile",
+      "description": "Non-PII public profile displayed on listings, comments, and reviews.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "fullName": { "type": "string" },
+        "username": { "type": "string" },
+        "bio": { "type": "string" },
+        "city": { "type": "string" },
+        "accountType": { "type": "string", "enum": ["SEEKER", "OWNER", "BOTH"] },
+        "photoData": { "type": "string" },
+        "verified": { "type": "boolean" },
+        "visibility": { "type": "string", "enum": ["PUBLIC", "PRIVATE"] },
+        "ratingAvg": { "type": "number" },
+        "ratingCount": { "type": "integer" },
+        "followersCount": { "type": "integer" },
+        "followingCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "fullName", "username", "accountType", "visibility", "createdAt", "updatedAt"]
+    },
+    "RoomListing": {
+      "title": "RoomListing",
+      "description": "Published or owner-managed rental room listing.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string" },
+        "ownerName": { "type": "string" },
+        "ownerPhoto": { "type": "string" },
+        "ownerVerified": { "type": "boolean" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string", "enum": ["SINGLE_ROOM", "DOUBLE_SHARING", "TRIPLE_SHARING", "SHARED_ROOM", "PG", "ONE_BHK", "TWO_BHK", "FLAT", "HOSTEL"] },
+        "monthlyRent": { "type": "integer" },
+        "securityDeposit": { "type": "integer" },
+        "roomSizeSqFt": { "type": "integer" },
+        "occupants": { "type": "integer" },
+        "availableFrom": { "type": "string" },
+        "furnishing": { "type": "string", "enum": ["FURNISHED", "SEMI_FURNISHED", "UNFURNISHED"] },
+        "bathroomType": { "type": "string", "enum": ["ATTACHED", "SHARED"] },
+        "genderPreference": { "type": "string", "enum": ["ANYONE", "MALE", "FEMALE", "STUDENTS", "PROFESSIONALS", "FAMILY"] },
+        "facilities": { "type": "array" },
+        "country": { "type": "string" },
+        "state": { "type": "string" },
+        "city": { "type": "string" },
+        "area": { "type": "string" },
+        "address": { "type": "string" },
+        "postalCode": { "type": "string" },
+        "hideExactAddress": { "type": "boolean" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "coverPhoto": { "type": "string" },
+        "photos": { "type": "array" },
+        "videoUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["AVAILABLE", "PAUSED", "RENTED", "REJECTED"] },
+        "likesCount": { "type": "integer" },
+        "commentsCount": { "type": "integer" },
+        "viewsCount": { "type": "integer" },
+        "favouritesCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerId", "ownerName", "title", "description", "category", "monthlyRent", "furnishing", "bathroomType", "genderPreference", "city", "area", "latitude", "longitude", "status", "createdAt", "updatedAt"]
+    },
+    "RoomLike": {
+      "title": "RoomLike",
+      "description": "User like on a room listing.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "roomId": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "roomId", "ownerId", "createdAt"]
+    },
+    "RoomComment": {
+      "title": "RoomComment",
+      "description": "User comment on a room post.",
+      "type": "object",
+      "properties": {
+        "roomId": { "type": "string" },
+        "roomOwnerId": { "type": "string" },
+        "roomStatus": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorPhoto": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["roomId", "roomOwnerId", "roomStatus", "authorId", "authorName", "text", "createdAt", "updatedAt"]
+    },
+    "FavouriteItem": {
+      "title": "FavouriteItem",
+      "description": "User saved room reference.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "roomId": { "type": "string" },
+        "roomTitle": { "type": "string" },
+        "roomCity": { "type": "string" },
+        "roomRent": { "type": "integer" },
+        "roomPhoto": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "roomId", "roomTitle", "createdAt"]
+    },
+    "FollowRelation": {
+      "title": "FollowRelation",
+      "description": "User follow relationship.",
+      "type": "object",
+      "properties": {
+        "followerId": { "type": "string" },
+        "targetUserId": { "type": "string" },
+        "targetName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["followerId", "targetUserId", "createdAt"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "One-to-one chat thread between seeker and room owner.",
+      "type": "object",
+      "properties": {
+        "participantIds": { "type": "array" },
+        "participantNames": { "type": "object" },
+        "participantPhotos": { "type": "object" },
+        "roomId": { "type": "string" },
+        "roomTitle": { "type": "string" },
+        "lastMessage": { "type": "string" },
+        "lastSenderId": { "type": "string" },
+        "unreadBy": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["participantIds", "lastMessage", "lastSenderId", "createdAt", "updatedAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Message inside a conversation.",
+      "type": "object",
+      "properties": {
+        "conversationId": { "type": "string" },
+        "participantIds": { "type": "array" },
+        "senderId": { "type": "string" },
+        "text": { "type": "string" },
+        "imageData": { "type": "string" },
+        "readStatus": { "type": "string", "enum": ["SENT", "READ"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["conversationId", "participantIds", "senderId", "readStatus", "createdAt", "updatedAt"]
+    },
+    "BookingRequest": {
+      "title": "BookingRequest",
+      "description": "Room booking or property visit request.",
+      "type": "object",
+      "properties": {
+        "roomId": { "type": "string" },
+        "roomTitle": { "type": "string" },
+        "roomCity": { "type": "string" },
+        "roomRent": { "type": "integer" },
+        "roomPhoto": { "type": "string" },
+        "seekerId": { "type": "string" },
+        "seekerName": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "ownerName": { "type": "string" },
+        "participantIds": { "type": "array" },
+        "bookingType": { "type": "string", "enum": ["BOOKING", "VISIT"] },
+        "preferredDate": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "VISIT_SCHEDULED", "ACCEPTED", "REJECTED", "CONFIRMED", "CANCELLED"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["roomId", "roomTitle", "seekerId", "seekerName", "ownerId", "ownerName", "participantIds", "bookingType", "preferredDate", "status", "createdAt", "updatedAt"]
+    },
+    "RoomReview": {
+      "title": "RoomReview",
+      "description": "Verified review tied to an existing booking.",
+      "type": "object",
+      "properties": {
+        "roomId": { "type": "string" },
+        "roomOwnerId": { "type": "string" },
+        "roomStatus": { "type": "string" },
+        "reviewerId": { "type": "string" },
+        "reviewerName": { "type": "string" },
+        "reviewerPhoto": { "type": "string" },
+        "bookingId": { "type": "string" },
+        "rating": { "type": "integer" },
+        "comment": { "type": "string" },
+        "ownerResponse": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["roomId", "roomOwnerId", "roomStatus", "reviewerId", "reviewerName", "bookingId", "rating", "comment", "createdAt", "updatedAt"]
+    },
+    "AppNotification": {
+      "title": "AppNotification",
+      "description": "User notification entry.",
+      "type": "object",
+      "properties": {
+        "recipientId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "type": { "type": "string", "enum": ["MESSAGE", "LIKE", "COMMENT", "BOOKING_REQUEST", "BOOKING_UPDATE", "LISTING_UPDATE"] },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "targetId": { "type": "string" },
+        "readStatus": { "type": "string", "enum": ["UNREAD", "READ"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["recipientId", "senderId", "type", "title", "body", "readStatus", "createdAt"]
+    },
+    "ListingReport": {
+      "title": "ListingReport",
+      "description": "User report for suspicious listings or reviews.",
+      "type": "object",
+      "properties": {
+        "reporterId": { "type": "string" },
+        "targetType": { "type": "string", "enum": ["ROOM", "REVIEW"] },
+        "targetId": { "type": "string" },
+        "reason": { "type": "string" },
+        "details": { "type": "string" },
+        "status": { "type": "string", "enum": ["OPEN", "RESOLVED", "DISMISSED"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reporterId", "targetType", "targetId", "reason", "status", "createdAt"]
+    },
+    "AdminLog": {
+      "title": "AdminLog",
+      "description": "Audit log of admin actions.",
+      "type": "object",
+      "properties": {
+        "adminId": { "type": "string" },
+        "action": { "type": "string" },
+        "targetId": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["adminId", "action", "targetId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserAccount" },
+      "description": "Private user account and PII."
+    },
+    "/publicProfiles/{userId}": {
+      "schema": { "$ref": "#/entities/PublicProfile" },
+      "description": "Publicly visible user profile without PII."
+    },
+    "/users/{userId}/favourites/{roomId}": {
+      "schema": { "$ref": "#/entities/FavouriteItem" },
+      "description": "User's saved rooms."
+    },
+    "/users/{userId}/following/{targetUserId}": {
+      "schema": { "$ref": "#/entities/FollowRelation" },
+      "description": "Users followed by userId."
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/AppNotification" },
+      "description": "Persistent user notifications."
+    },
+    "/rooms/{roomId}": {
+      "schema": { "$ref": "#/entities/RoomListing" },
+      "description": "Room rental listings."
+    },
+    "/rooms/{roomId}/likes/{userId}": {
+      "schema": { "$ref": "#/entities/RoomLike" },
+      "description": "Per-user likes on a room."
+    },
+    "/rooms/{roomId}/comments/{commentId}": {
+      "schema": { "$ref": "#/entities/RoomComment" },
+      "description": "Comments on a room post."
+    },
+    "/rooms/{roomId}/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/RoomReview" },
+      "description": "Verified booking reviews on a room."
+    },
+    "/conversations/{conversationId}": {
+      "schema": { "$ref": "#/entities/Conversation" },
+      "description": "1-on-1 chat threads."
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Chat messages."
+    },
+    "/bookings/{bookingId}": {
+      "schema": { "$ref": "#/entities/BookingRequest" },
+      "description": "Room bookings and visit requests."
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/ListingReport" },
+      "description": "Reported listings and reviews."
+    },
+    "/adminLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AdminLog" },
+      "description": "Admin audit trail."
+    }
+  }
+}

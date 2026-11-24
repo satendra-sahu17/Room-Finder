@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RoomFinder</string>
+    <string name="tagline">Smart location-first room discovery &amp; direct owner rentals</string>
+    <string name="sign_in_google">Continue with Google</string>
+    <string name="register_with_google">Create Account with Google</string>
+    <string name="auth_provider_notice">Authentication uses Google Sign-In. Email &amp; password sign-in is not enabled on this backend and requires enabling the Email/Password provider in the Firebase Console.</string>
+    <string name="account_recovery_summary">Your RoomFinder account uses Google Sign-In, so password resets are managed securely through Google Account Recovery. Email/password login and reset emails are not enabled on this backend unless you activate the Email/Password provider in the Firebase Console.</string>
+    <string name="privacy_policy_summary">RoomFinder collects your Google account display details and only the room/profile details you explicitly submit. Private contact details (email and phone) are stored separately and shared only according to your privacy toggles. Location is read on-demand when you search nearby rooms and is never tracked in the background.</string>
+    <string name="terms_summary">All listings must represent genuine available rooms with accurate pricing and location. Owners are responsible for availability updates; seekers should verify properties during scheduled visits before transferring deposits.</string>
+</resources>
